@@ -1,1 +1,44 @@
+name: Deploy Blue (main branch)
 
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: public-cloud-concepts-487620
+  REGION: europe-west4
+  REPOSITORY: bluegreen
+  IMAGE: blue
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Configure Docker for Artifact Registry
+      run: gcloud auth configure-docker $REGION-docker.pkg.dev
+
+    - name: Build Docker image
+      run: docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest .
+
+    - name: Push Docker image
+      run: docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest
+
+    - name: Get GKE credentials
+      uses: google-github-actions/get-gke-credentials@v2
+      with:
+        cluster_name: autopilot-cluster-1
+        location: europe-west4
+
+    - name: Update Blue deployment
+      run: |
+        kubectl set image deployment/blue-deployment myapp=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest
