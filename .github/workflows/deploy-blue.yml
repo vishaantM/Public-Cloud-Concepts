@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: public-cloud-concepts-487620
-  REGION: europe-west4
+  REGION: us-east1
   REPOSITORY: bluegreen
   IMAGE: blue
 
