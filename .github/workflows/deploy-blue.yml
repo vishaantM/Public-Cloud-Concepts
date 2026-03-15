@@ -42,3 +42,4 @@ jobs:
     - name: Update Blue deployment
       run: |
         kubectl set image deployment/blue-deployment myapp=$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest
+
