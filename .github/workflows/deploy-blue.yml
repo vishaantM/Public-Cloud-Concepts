@@ -37,7 +37,7 @@ jobs:
       uses: google-github-actions/get-gke-credentials@v2
       with:
         cluster_name: autopilot-cluster-1
-        location: europe-west4
+        location: us-east1
 
     - name: Update Blue deployment
       run: |
