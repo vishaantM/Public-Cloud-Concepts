@@ -9,7 +9,7 @@ env:
   PROJECT_ID: public-cloud-concepts-487620
   REGION: us-east1
   REPOSITORY: bluegreen
-  IMAGE: blue
+  IMAGE: blue: latest
 
 jobs:
   build:
