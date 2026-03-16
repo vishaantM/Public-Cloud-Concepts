@@ -36,7 +36,7 @@ jobs:
     - name: Get GKE credentials
       uses: google-github-actions/get-gke-credentials@v2
       with:
-        cluster_name: gk3-autopilot-cluster-1
+        cluster_name: autopilot-cluster-1
         location: us-east1
 
     - name: Update Green Deployment
